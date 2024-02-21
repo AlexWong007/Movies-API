@@ -15,10 +15,14 @@ app.get("/movies", (req, res) => {
 
 // GET http://localhost:4000/movies/1 to get the movie with specific ID
 app.get("/movies/:id", (req, res) => {
-    const id = parseInt(req.params.id - 1);
+    const id = parseInt(req.params.id);
     const foundMovie = movies.findIndex((movie) => movie.id === id)
-    console.log(movies[id]);
-    res.json(foundMovie);
+    if (foundMovie !== undefined) {
+      console.log(movies[foundMovie]);
+      res.json(movies[foundMovie]);
+    } else {
+        res.status(404).json({ error: "Movie not found" });
+    }
 });
 
 // GET http://localhost:4000/random to get a random movie
